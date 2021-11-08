@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member.mapper">
+	
+<insert id="insert">
+	insert into mem_info_tb (mem_id, mem_email, mem_pw, mem_name, mem_nickname
+	, mem_body, mem_alcohol_type, mem_flavor, mem_smell
+	, mem_alcohol_bv, mem_birth, mem_join_dt
+	, mem_profile_imgname, mem_profile_imgpath, mem_address
+	, mem_post, mem_gender, mem_phone) 
+	values ((select max(mem_id)+1 from mem_info_tb), #{mem_email}
+	, #{mem_pw}, #{mem_name}, #{mem_nickname}, #{mem_body}
+	, #{mem_alcohol_type}, #{mem_flavor}, #{mem_smell}, #{mem_alcohol_bv}
+	, #{mem_birth}, sysdate
+	, #{mem_profile_imgname , jdbcType=VARCHAR } , #{mem_profile_imgpath , jdbcType=VARCHAR}
+	, #{mem_address}, #{mem_post}, #{mem_gender}, #{mem_phone})
+</insert>
+
+
+<select id="member_select_email" resultType="VO.mem_info_tbVO">
+		select * from mem_info_tb where mem_email = #{email}
+</select>
+
+<select id="emailsearch2" resultType="VO.mem_info_tbVO">
+		select * from mem_info_tb where mem_nickname = #{mem_nickname} and mem_phone = #{mem_phone}
+</select>
+<select id="pwsearch2" resultType="VO.mem_info_tbVO">
+		select * from mem_info_tb where mem_email = #{mem_email} and mem_nickname = #{mem_nickname} and mem_phone = #{mem_phone}
+</select>
+
+<select id="mem_email_check" resultType="int">
+		select count(*) from mem_info_tb where mem_email = #{mem_email}
+</select>
+
+<select id="member_imgpath" resultType="String">
+		select mem_profile_imgpath from mem_info_tb where mem_nickname = #{nickname}
+</select>
+
+<select id="member_loginautogetid" resultType="VO.mem_info_tbVO">
+		select * from mem_info_tb where mem_id = #{mem_id}
+</select>
+<select id="member_login" resultType="VO.mem_info_tbVO">
+		select mem_info_tb.*, case when mem_kakao is not null then 'mem_kakao'
+					          		when mem_naver is not null then 'mem_naver'
+					    		end mem_social_type
+		from mem_info_tb where mem_email = #{mem_email} and mem_pw = #{mem_pw}
+</select>
+<update id="member_loginauto">
+	update mem_info_tb set mem_auto_ip = #{mem_auto_ip}, mem_auto = 'T' where mem_email = #{mem_email}
+</update>
+<select id="member_loginokno" parameterType="String" resultType="Integer">
+	select mem_id from mem_info_tb where mem_auto_ip = #{mem_auto_ip}
+</select>
+<update id="member_ipdelete">
+	update mem_info_tb set mem_auto_ip = null, mem_auto = 'F' where mem_email = #{mem_email}
+</update>
+
+<!-- 회원 탈퇴 -->
+<delete id="delete">
+	delete from mem_info_tb where mem_id = #{mem_id}
+</delete>
+
+	<!-- 해당 소셜로그인 있는지 확인 있거나 없거나 이므로, 반환되는 타입은 숫자 -->
+	<select id="member_social_email_kakao" resultType="integer">
+		select count(*) from mem_info_tb where mem_kakao = #{social_email}
+	</select>
+	<!-- 해당 소셜로그인 있는지 확인 있거나 없거나 이므로, 반환되는 타입은 숫자 -->
+	<select id="member_social_email_naver" resultType="integer">
+		select count(*) from mem_info_tb where mem_naver = #{social_email}
+	</select>
+	
+		<!-- 카카오 member_social_insert : 회원정보가 없는 소셜 회원을 저장 -->
+		<insert id="member_social_insert_kakao">
+	insert into mem_info_tb (mem_id, mem_email, mem_pw, mem_name, mem_nickname
+	, mem_body, mem_alcohol_type, mem_flavor, mem_smell
+	, mem_alcohol_bv, mem_birth, mem_join_dt
+	, mem_profile_imgname, mem_profile_imgpath, mem_address
+	, mem_post, mem_gender, mem_phone, mem_kakao, mem_kakao_id, mem_kakao_nickname, mem_social_type) 
+	values ((select max(mem_id)+1 from mem_info_tb), #{mem_kakao_id}
+	, #{mem_pw}, #{mem_name}, #{mem_nickname}, #{mem_body}
+	, #{mem_alcohol_type}, #{mem_flavor}, #{mem_smell}, #{mem_alcohol_bv}
+	, #{mem_birth}, sysdate
+	, #{mem_profile_imgname , jdbcType=VARCHAR } , #{mem_profile_imgpath , jdbcType=VARCHAR}
+	, #{mem_address}, #{mem_post}, #{mem_gender}, #{mem_phone}, #{mem_email}, #{mem_kakao_id}, #{mem_nickname}, #{mem_social_type})
+</insert>
+	<!-- <insert id="member_social_insert_kakao">
+		insert into mem_info_tb(mem_id, mem_nickname, mem_kakao_nickname, mem_gender, mem_kakao, mem_email, mem_profile_imgpath, mem_join_dt) 
+		values((select max(mem_id)+1 from mem_info_tb),#{mem_kakao_nickname}, #{mem_kakao_nickname}, #{mem_gender}, #{social_email}, #{mem_email}, #{mem_profile_imgpath}, sysdate)
+	</insert> -->
+	
+		<!-- 카카오 member_social_update : 회원정보가 있는 소셜 회원을 업데이트-->
+	<update id="member_social_update_kakao">
+		update mem_info_tb set mem_nickname=#{mem_kakao_nickname} ,mem_kakao_nickname = #{mem_kakao_nickname}
+		where mem_kakao = #{social_email}
+	</update>
+	
+	<!-- 일반회원이 직접 회원정보 수정시 -->
+	<update id="meminfoupdate">
+	update mem_info_tb set mem_name = #{mem_name}, mem_nickname = #{mem_nickname}
+	, mem_pw = #{mem_pw}, mem_address = #{mem_address}
+	, mem_phone = #{mem_phone}, mem_gender = #{mem_gender}
+	, mem_profile_imgpath = #{mem_profile_imgpath , jdbcType=VARCHAR}, mem_profile_imgname = #{mem_profile_imgname , jdbcType=VARCHAR}
+	, mem_birth = #{mem_birth}, mem_post = #{mem_post}
+	where mem_id = #{mem_id}
+</update>
+	<!-- 소셜회원이 직접 회원정보 수정시 -->
+	<update id="socialmeminfoupdate">
+	update mem_info_tb set mem_name = #{mem_name}, mem_nickname = #{mem_nickname}
+	,mem_address = #{mem_address}
+	, mem_phone = #{mem_phone}, mem_gender = #{mem_gender}
+	, mem_profile_imgpath = #{mem_profile_imgpath , jdbcType=VARCHAR}, mem_profile_imgname = #{mem_profile_imgname , jdbcType=VARCHAR}
+	, mem_birth = #{mem_birth}, mem_post = #{mem_post}
+	where mem_email = #{mem_email}
+</update>
+	
+			<!-- 네이버 member_social_insert : 회원정보가 없는 소셜 회원을 저장 -->
+	<insert id="member_social_insert_naver">
+		insert into mem_info_tb(mem_id, mem_name, mem_nickname, mem_gender, mem_naver, mem_email, mem_phone, mem_join_dt) 
+		values((select max(mem_id)+1 from mem_info_tb), #{mem_name}, #{mem_nickname}, #{mem_gender}, #{social_email}, #{mem_email}, #{mem_phone}, sysdate)
+	</insert>
+			<!-- 네이버 member_social_insert : 회원정보가 없는 소셜 회원을 저장 -->
+<!-- 	<insert id="member_social_insert_naver">
+		insert into mem_info_tb(mem_id, mem_name, mem_nickname, mem_gender, mem_naver, mem_email, mem_naver_id, mem_phone, mem_profile_imgpath) 
+		values((select max(mem_id)+1 from mem_info_tb), #{mem_name}, #{mem_nickname}, #{mem_gender}, #{social_email}, #{mem_email}, #{mem_naver_id}, #{mem_phone}, #{mem_profile_imgpath})
+	</insert> -->
+	
+		<!-- 네이버 member_social_update : 회원정보가 있는 소셜 회원을 업데이트-->
+	<update id="member_social_update_naver">
+		update mem_info_tb set mem_gender = #{mem_gender}, mem_name=#{mem_name} 
+		where mem_naver = #{social_email}
+	</update>
+	
+<!-- 회원정보수정 -->
+	<update id="update">
+	update mem_info_tb set mem_name = #{mem_name}, mem_nickname = #{mem_nickname}
+	, mem_pw = #{mem_pw}, mem_address = #{mem_address}
+	, mem_phone = #{mem_phone}, mem_gender = #{mem_gender}
+	, mem_profile_imgpath = #{mem_profile_imgpath , jdbcType=VARCHAR}, mem_profile_imgname = #{mem_profile_imgname , jdbcType=VARCHAR}
+	, mem_birth = #{mem_birth}, mem_post = #{mem_post}
+	where mem_id = #{mem_id}
+</update>
+<select id="selectid" resultType="VO.mem_info_tbVO">
+		select mem_info_tb.*, case when mem_kakao is not null then 'mem_kakao'
+					          		when mem_naver is not null then 'mem_naver'
+					    		end mem_social_type
+		from mem_info_tb where mem_id = #{mem_id}
+</select>
+
+<!-- <update id="update">
+	update mem_info_tb set mem_name = #{mem_name}, mem_nickname = #{mem_nickname}
+	, mem_pw = #{mem_pw}, mem_gender = #{mem_gender}, mem_address = #{mem_address}
+	, mem_phone = #{mem_phone}, mem_gender = #{mem_gender}, mem_address = #{mem_address}
+	, mem_profile_imgpath = #{mem_profile_imgpath}, mem_profile_imgname = #{mem_profile_imgname}, mem_birth = #{mem_birth}
+	, mem_alcohol_bv = #{mem_alcohol_bv}, mem_smell = #{mem_smell}, mem_flavor = #{mem_flavor}
+	, mem_alcohol_type = #{mem_alcohol_type}, mem_body = #{mem_body}, mem_pw = #{mem_pw}
+	where mem_id = #{mem_id}
+</update> -->
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="mysubs.mapper">
+
+<select id="mySubsList" resultType="VO.MySubsVO">
+
+SELECT subs_monthday month, 
+        ((SELECT al_name FROM al_info_tb where al_id = e.subs_alcohol1)||', '||
+        (SELECT al_name FROM al_info_tb where al_id = e.subs_alcohol2)) al_List ,
+        subs_price price_state
+FROM subs_info_tb e
+where subs_mem_id = #{id}
+and subs_refund = 'F'
+order by month desc
+</select>
+
+<select id="mySubsAllList" resultType="VO.MySubsVO">
+SELECT subs_monthday month, 
+        ((SELECT al_name FROM al_info_tb where al_id = e.subs_alcohol1)||', '||
+        (SELECT al_name FROM al_info_tb where al_id = e.subs_alcohol2)) al_List ,
+        subs_price price_state
+FROM subs_info_tb e
+where subs_mem_id = #{id}
+order by month desc
+</select>
+
+<update id="mySubsUpdate">
+update subs_info_tb 
+set subs_refund = 'T', 
+	subs_refund_price = (select subs_price 
+						 from subs_info_tb 
+						 where subs_mem_id = #{id} and subs_monthday = #{subs_monthday})
+where subs_mem_id = #{id} and subs_monthday = #{subs_monthday}
+
+</update>
+
+<select id="mySubsResult" resultType="VO.MySubsVO">
+SELECT subs_monthday month, 
+        ((SELECT al_name FROM al_info_tb where al_id = e.subs_alcohol1)||', '||
+        (SELECT al_name FROM al_info_tb where al_id = e.subs_alcohol2)) al_List ,
+        subs_refund price_state
+FROM subs_info_tb e
+where subs_mem_id = #{id}
+order by month desc
+</select>
+
+</mapper>

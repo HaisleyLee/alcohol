@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fri.mapper">
+
+<!-- 해당 아이디의 모든 술장고 정보 가져옴 -->
+<select id="selectlist" resultType="VO.fridge_info_tbVO">
+	select * from fridge_info_tb where fridge_device_id = #{mem_id}
+</select>
+<!--해당 술 id로 해당 술정보 가져옴 -->
+<select id="alselectlist" resultType="VO.Al_Info_VO">
+	select * from al_info_tb where al_id = #{al_id}
+</select>
+
+<!--해당 id로 해당 mst_code 데이터 가져옴 -->
+<select id="mst_code" resultType="VO.mst_codeVO">
+	select * from mst_code where mst_key = #{mst_key}
+</select>
+
+
+</mapper>

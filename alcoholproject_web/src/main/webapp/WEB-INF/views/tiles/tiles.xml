@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://tiles.apache.org/framework/tiles-core/dtddoc/tiles-config_3_0.dtd.html에서 복사해왔음 -->
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="layout" template="/WEB-INF/views/tiles/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/include/header.jsp"/>
+		<!-- /WEB-INF/views/include/header.jsp 안의 값을 헤더에 자동 붙이겠다. -->
+		<put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp"/>
+		<!-- /WEB-INF/views/include/footer.jsp 안의 값을 푸터에 자동 붙이겠다. -->
+	</definition>
+
+	<definition name="*/*" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+		<!-- 나중에 div를 content로 쓸 것
+		/WEB-INF/views/ 아래 새로운 폴더 밑에 새로운 파일 생성할 시 레이아웃.jsp가 연결되도록 함.-->
+	</definition>
+	
+	<!-- <definition name="*" extends="layout">
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp"/>
+		views 바로 아래 파일도 layout 적용할 것.
+	</definition> -->
+	
+	<definition name="error/*" template="/WEB-INF/views/tiles/default.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp"/>
+		<!-- 에러 페이지를 만드는 처리 -->
+	</definition>
+		
+	<definition name="member/login" template="/WEB-INF/views/tiles/default.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/member/login.jsp"/>
+		<!-- 에러 페이지를 만드는 처리 -->
+	</definition>	
+</tiles-definitions>
+

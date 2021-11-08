@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="subscribe.mapper">
+	
+<select id="subs_Chk" resultType="integer">
+	select count(*) from subs_info_tb where subs_mem_id = #{mem_id}
+</select>
+<insert id="subs_insert">
+	insert into subs_info_tb(subs_id, subs_monthday, subs_mem_id, subs_address, subs_order_dt, subs_deliverydt, subs_price, subs_alcohol1, subs_alcohol2)
+	values((select (max(subs_id)+1) from subs_info_tb), #{subs_monthday, jdbcType=VARCHAR}, #{subs_mem_id, jdbcType=VARCHAR}, #{subs_address, jdbcType=VARCHAR}
+			, sysdate, #{subs_deliverydt, jdbcType=VARCHAR}, #{subs_price, jdbcType=VARCHAR}, #{subs_alcohol1}, #{subs_alcohol2})
+</insert>
+<select id="subs_alcList" resultType="VO.Al_Info_VO">
+	select al_id, a.al_name al_name, a.al_alcohol_type al_alcohol_type, 
+       		a.al_flavor al_flavor, a.al_smell al_smell, 
+      		al_real_alcohol_bv, al_imgpath
+	from al_info_tb a left outer join mem_info_tb m on mem_id = #{mem_id}
+	where a.al_body = m.mem_body 
+	and a.al_flavor = m.mem_flavor
+	UNION
+	select al_id, a.al_name al_name, a.al_alcohol_type al_alcohol_type, 
+     	  a.al_flavor al_flavor, a.al_smell al_smell, 
+    	  al_real_alcohol_bv, al_imgpath
+	from al_info_tb a left outer join mem_info_tb m on mem_id = #{mem_id}
+	where a.al_smell = m.mem_smell 
+	and a.al_alcohol_type = m.mem_alcohol_type
+    and a.al_alcohol_bv = m.mem_alcohol_bv
+</select>
+</mapper>

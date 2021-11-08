@@ -1,0 +1,171 @@
+@charset "UTF-8";
+/* 공지사항 타이틀 관련 폰트 */
+@font-face {
+    font-family: 'HSGaeulSenggak20';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSGaeulSenggak20.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SLEIGothicTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+li{
+	list-style: none;
+}
+
+.container{
+	display: block;
+	padding: 30px;
+	margin: 20px auto;
+	margin-top: 60px;
+	width: 95%;	
+	min-height: 500px;
+}
+
+.notice_table{
+	display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.search{
+	display: flex;
+	margin-bottom: 20px;
+}
+
+select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+  width: 98px;
+  text-align: center;
+  appearance: none;
+  font-size: 17px;
+  font-weight: 400;
+  height: 2rem;
+  color: #444;
+  background-color: #fff;
+  padding: .6em 1.4em .5em .8em;
+  margin: 0;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 1px rgb(0 0 0 / 4%);
+}
+
+.all{
+	padding: 5px;
+	font-size:22px;
+	color: #7048e8;
+}
+
+.noticeIm{
+	background-color: #edf2ff;
+}
+
+select:hover {
+	border-color: #888;
+}
+
+select:focus {
+	border-color: #aaa;
+	box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+	box-shadow: 0 0 0 3px -moz-mac-focusring;
+	color: #222;
+	outline: none;
+}
+
+select:disabled {
+	opacity: 0.5;
+}
+
+
+.search li {
+	margin-right: 10px;
+}
+
+.title{
+	text-align: left;
+}
+
+.title h4{
+	font-family: 'HSGaeulSenggak20';
+	font-size: 24px;
+	margin-bottom: 0px;
+}
+
+.title_span{
+	font-size: 18px;
+	font-weight: bold;
+	margin-right: 10px;
+}      
+
+
+.title p{
+	font-family: 'NanumSquareRound';
+	font-size: 18px;
+	margin: 0px;
+	margin-left: 15px;
+}
+
+#list-top {
+	text-align: right;
+}
+
+.btnSearch{
+	height: 35px;
+  line-height: 35px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+#list-top a {
+	padding: 10px;
+	font-size: 18px;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+}
+
+.inputSearch{
+	width: 300px;
+  height: 15px;
+  line-height: 15px;
+  padding: 10px;
+}
+
+table {
+	border:none;
+	width: 100%;
+}
+
+th, td {
+	padding: 10px;
+}
+
+th:first-child, td:first-child {
+	border-left: none;
+}
+
+
+tr:not(.no_back):hover{
+	background-color: #f1f3f5;
+}
+
+tr:not(.no_back):hover .underline{
+	text-decoration: underline;
+}
+ 
+.pageSet{
+	display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}                                                                           

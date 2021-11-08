@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+#chatList{
+background:gray;
+overflow-y:scroll; width:500px; height:300px; padding:4px; border:1 solid #000000;
+}
+
+.chatuserdiv{
+	text-align:right;
+}
+.chatuserdiv .span1{
+display:block; color:white; margin-bottom:3px; font-size: 12px;
+}
+.chatuserdiv  .span2{
+background-color:#f8fc00; display:inline-block; max-width: 200px; min-width:50px; border-radius: 10px; margin: 5px 0px; font-size:20px; padding: 10px; color:black;
+}
+.chatuserdiv .span3{
+display: block;  color:white; margin-bottom:3px; font-size: 12px;
+}
+
+.chatrevdiv{
+	text-align:left;
+}
+.chatrevdiv .span1{
+display: block;  color:white; margin-bottom:3px; font-size: 12px;
+}
+.chatrevdiv .span2{
+background-color:#ffffff; display:inline-block; max-width: 200px; min-width:50px; border-radius: 10px; margin: 5px 0px; font-size:20px; padding: 10px; color:black;
+}
+.chatrevdiv .span3{
+display: block;  color:white; margin-bottom:3px; font-size: 12px;
+}
+/* 위는 채팅 css / 아래는 팝업 css */
+#popup01{
+    display: none;
+}
+#popup01{
+width: 500px;
+height: 500px;
+position: absolute;
+top: 50%;
+left: 50%;
+margin: -250px 0 0 -250px;
+background-color: #fff;
+z-index: 2;
+    }
+.backon{
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: #00000054;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.close{
+  position:absolute;
+  top:-25px;
+  right: 0;
+  cursor:pointer;
+}
+
+.openPopup{
+
+  cursor:pointer;
+
+}

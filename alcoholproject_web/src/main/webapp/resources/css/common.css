@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+body{
+	margin: 0px auto;
+	/* display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	justify-content: center; */
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'S-CoreDream-3Light';
+  color: #69358E;
+  font-weight: bold;
+  size: 24px;
+}
+
+a:link, a:visited { text-decoration:none; color:rgb(32, 32, 32); }
+img { vertical-align:middle; }
+table {
+	width:80%;
+	margin:0 auto;
+	border:1px solid #999999;
+	border-collapse:collapse; 
+}
+/* table tr td a:hover, ul.grid li div:first-child a:hover { font-weight:bold; } */ 
+
+.grid li div:nth-child(2) { padding:0 10px } 
+input:focus {outline:none;}
+ 
+
+select { height:32px;  }
+
+.left { text-align:left; }
+
+.right { text-align:right; }
+
+textarea { padding: 5px 10px; }
+
+ 
+
+input[name=title] { width:calc(100% - 24px)}
+
+textarea[name=content] { width:calc(100% - 24px); resize:none; height:150px; }
+
+ 
+
+.file-img { width:24px } 
+
+#attach-file, #delete-file { display:none; }
+
+#delete-file { color: #b3b3b3; }
+
+ 
+
+.page_on, .page_off, .page_next, .page_last, .page_first, .page_prev{ 
+
+	display:inline-block;  line-height: 30px; margin:0;
+
+}
+
+.page_on { border:1px solid gray; background-color:gray; 
+
+	color:#fff; font-weight:bold;}
+
+.page_on, .page_off{
+
+	min-width:22px; padding:0 5px 2px   
+
+}	
+
+.page_next, .page_last, .page_first, .page_prev {
+
+	width:30px; height:32px; border:1px solid gray; text-indent:-999999999999px
+
+}
+
+ 
+
+/* .loading { position:absolute; left:50%; top:50%; 
+
+			transform:translate(-50%,-50%); display:none; } */
+.center { position:absolute; left:50%; top:50%; 
+
+			transform:translate(-50%,-50%); display:none; }
+
+/*  
+.tb_list{
+	table-layout: fixed; *//*테이블 사이즈 고정
+} */
+/*테이블의 내용이 너무길어지면*/
+.tb_list td{
+	overflow: hidden; /* 말 숨김 */
+	text-overflow: ellipsis; /* 말줄임 */
+	white-space: nowrap;
+}
+.tb_content_list td{
+	word-break:break-all;/* 너무 긴 텍스트는 다음 줄로 */
+}
+
+.w-pct80 { width:80% }
+
+.w-pct60 { width:60% }
+
+.w-pct50 { width:50% }
+
+.w-pct40 { width:40% }
+
+.w-px300 { width:300px; }
+
+.w-px200 { width:200px; }
+
+.w-px250 { width:200px; }
+
+.w-px100 { width:100px; }
+
+.w-px80 { width:80px; }
+
+.w-px60 { width:60px; }
+
+.w-px40 { width:40px; }
+
+.w-px180 { width:180px; }
+
+.w-px160 { width:160px; }
+
+.w-px140 { width:140px; }
+
+.w-px120 { width:120px; }
+
+
+
+
+/* 여기서부터 시작 */
+

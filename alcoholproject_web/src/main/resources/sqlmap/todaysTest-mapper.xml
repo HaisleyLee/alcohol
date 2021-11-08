@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="todaystest.mapper">
+
+<select id="todaystest_list" resultType="VO.TodaysTestVO">
+	select * from todays_tb
+</select>
+
+<select id="todaystest_result_A" resultType="Integer">
+	select todays_a_result
+	from todays_tb
+	where todays_id = #{id}
+</select>
+
+<select id="todaystest_result_B" resultType="Integer">
+	select todays_b_result
+	from todays_tb
+	where todays_id = #{id}
+</select>
+
+<select id="selectList" resultType="Integer">
+	select al_id 
+	from al_info_tb
+	where al_body in 
+    <foreach collection="list" item="code" separator="," open="(" close=")">
+    	#{code}
+    </foreach>
+	and al_alcohol_type in 
+    <foreach collection="list" item="code" separator="," open="(" close=")">
+    	#{code}
+    </foreach>
+    and al_flavor in 
+    <foreach collection="list" item="code" separator="," open="(" close=")">
+    	#{code}
+    </foreach>
+	and al_smell in 
+    <foreach collection="list" item="code" separator="," open="(" close=")">
+    	#{code}
+    </foreach>
+	and al_alcohol_bv in 
+    <foreach collection="list" item="code" separator="," open="(" close=")">
+    	#{code}
+    </foreach>
+</select>
+
+<select id="selectOne" resultType="VO.Al_Info_VO">
+	select * from al_info_tb where al_id = #{id}
+</select>
+
+
+</mapper>

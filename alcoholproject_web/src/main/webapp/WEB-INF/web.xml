@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://JAVA.sun.com/xml/ns/javaee 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- 한글설정 START  -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		 <!-- 작성할때 .java 파일같이 자동완성되는곳에서 작성한뒤 잘라내온다 -->
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<!-- 초기화 됐을때의 파라미터를 지정 -->
+		<!-- CharacterEncodingFilter의 클래스에 매개 변수가 2개여서 안될 때는 forceEncoding까지 지정 -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		 <!-- 모든 요청에 대해서 이 필터를 거치게 함 -->
+	</filter-mapping>
+<!--한글 설정 END  -->
+	
+	<!-- 세션 2분 유지 후 비우기 설정 -->
+	<session-config>
+		<session-timeout>120</session-timeout>
+		<!-- 120초 = 2분 정도 세션 정보를 유지함
+		2분 지나면 세션을 비움.-->
+	</session-config>
+	
+	<!-- 에러났을 때 처리 : filter로 함-->
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/error</location>
+	</error-page>
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/error</location>
+	</error-page>
+	<error-page>
+	    <error-code>400</error-code>
+	    <location>/error</location>
+	</error-page>
+	<error-page>
+	    <error-code>405</error-code>
+	    <location>/error</location>
+	</error-page>
+	<!-- 404, 500, 400, 405 에러시 에러페이지로 이동  -->
+	
+</web-app>
